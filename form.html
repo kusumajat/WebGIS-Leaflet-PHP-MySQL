@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Form Input Data Penduduk</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .form-container {
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <h2 class="display-6 mb-3">Form Input Data</h2>
+                <div class="card shadow-sm form-container">
+                    <div class="card-body p-4">
+                        <form action="/pgweb_acara8_tgs2/input.php" onsubmit="return validateForm()" method="post">
+                            <div class="mb-3">
+                                <label for="kecamatan" class="form-label">Kecamatan</label>
+                                <input type="text" class="form-control" id="kecamatan" name="kecamatan"
+                                    placeholder="Masukkan nama kecamatan" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="longitude" class="form-label">Longitude</label>
+                                <input type="text" class="form-control" id="longitude" name="longitude"
+                                    placeholder="Masukkan longitude" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="latitude" class="form-label">Latitude</label>
+                                <input type="text" class="form-control" id="latitude" name="latitude"
+                                    placeholder="Masukkan latitude" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="luas" class="form-label">Luas</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="luas" name="luas"
+                                        placeholder="Masukkan luas wilayah" required>
+                                    <span class="input-group-text">Km^2</span>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="jumlah_penduduk" class="form-label">Jumlah Penduduk</label>
+                                <input type="text" class="form-control" id="jumlah_penduduk" name="jumlah_penduduk"
+                                    placeholder="Masukkan jumlah penduduk" required>
+                            </div>
+
+                            <div class="alert alert-danger d-none" id="informasi" role="alert">
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-save"></i> Simpan Data
+                                </button>
+                                <a href="index.php" class="btn btn-secondary">
+                                    <i class="bi bi-arrow-left"></i> Kembali
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function validateForm() {
+            let luas = document.getElementById("luas").value;
+            let longitude = document.getElementById("longitude").value;
+            let latitude = document.getElementById("latitude").value;
+            let jumlahPenduduk = document.getElementById("jumlah_penduduk").value;
+            let informasiElement = document.getElementById("informasi");
+            let isValid = true;
+            let errorMessages = [];
+
+            // Validasi Luas
+            if (isNaN(luas) || luas < 1) {
+                errorMessages.push("Data luas harus angka dan tidak boleh bernilai negatif");
+                isValid = false;
+            }
+
+            // Validasi Longitude
+            if (isNaN(longitude)) {
+                errorMessages.push("Longitude harus berupa angka");
+                isValid = false;
+            }
+
+            // Validasi Latitude
+            if (isNaN(latitude)) {
+                errorMessages.push("Latitude harus berupa angka");
+                isValid = false;
+            }
+
+            // Validasi Jumlah Penduduk
+            if (isNaN(jumlahPenduduk) || jumlahPenduduk < 0) {
+                errorMessages.push("Jumlah penduduk harus berupa angka positif");
+                isValid = false;
+            }
+
+            // Menampilkan pesan error jika ada
+            if (!isValid) {
+                informasiElement.innerHTML = errorMessages.join("<br>");
+                informasiElement.classList.remove("d-none");
+                event.preventDefault();
+            } else {
+                informasiElement.classList.add("d-none");
+                alert("Data berhasil disimpan!");
+                window.location.href = "index.php";
+            }
+
+            return isValid;
+        }
+
+        
+    </script>
+</body>
+
+</html>
